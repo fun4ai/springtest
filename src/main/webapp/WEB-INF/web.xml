@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+         http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
+    <display-name>SpringMVC Application</display-name>
+
+    <servlet>
+        <servlet-name>springmvc</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <!--默认加载 /WEB-INF/servlet名称-servlet.xml，即 springmvc-servlet.xml-->
+        <!--手动加载
+              <init-param>
+                <param-name>contextConfigLocation</param-name>
+                <param-value>classpath:springmvc-servlet.xml</param-value>
+            </init-param>-->
+        <load-on-startup>1</load-on-startup>
+        <!--文件上传 多路上传解析器 -->
+        <multipart-config>
+            <max-file-size>1000000</max-file-size>
+        </multipart-config>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>springmvc</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    
+    <error-page>
+        <location>/WEB-INF/jsp/Error.jsp</location>
+    </error-page>
+
+
+    <!-- 异步请求-->
+<!--    <filter>-->
+<!--        <filter-name>Spring OpenEntityManagerInViewFilter</filter-name>-->
+<!--        <filter-class>org.springframework.~.OpenEntityManagerInViewFilter</filterclass>-->
+<!--        <async-supported>true</async-supported>-->
+<!--    </filter>-->
+<!--    <filter-mapping>-->
+<!--        <filter-name>Spring OpenEntityManagerInViewFilter</filter-name>-->
+<!--        <url-pattern>/*</url-pattern>-->
+<!--        <dispatcher>REQUEST</dispatcher>-->
+<!--        <dispatcher>ASYNC</dispatcher>-->
+<!--    </filter-mapping>-->
+
+    <filter>
+        <filter-name>etagFilter</filter-name>
+        <filter-class>org.springframework.web.filter.ShallowEtagHeaderFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>etagFilter</filter-name>
+        <servlet-name>springmvc</servlet-name>
+    </filter-mapping>
+
+</web-app>
